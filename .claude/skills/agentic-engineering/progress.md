@@ -7,6 +7,7 @@ Last completed rung: 2 (digit buttons)
 | # | Module | Status | Notes |
 |---|--------|--------|-------|
 | 1 | Agentic engineering vs. vibe coding | done | Round 1 (rung 1) done: found both bugs, via build and dev. Round 2 (rung 2, digit buttons): build request took 3 review rounds (in `src/agentLessons/module1/archetectureDocRound2.md`); found all 3 bugs via dev, lint and diff; fixed; build/lint green on fix. |
+| 2 | CLAUDE.md and project memory | in progress | Draft answers in `src/agentLessons/module2/claudeMdExcercises.md`, feedback given. Needs the real `CLAUDE.md` at the root, then a fresh-session rung 3 test. |
 
 ## Bug hunt tally
 Found: 5 · Revealed: 0
@@ -21,8 +22,11 @@ Found: 5 · Revealed: 0
 ## Session log
 - 2026-09-23: M1 round 1 done. Added feature ladder, strict build requests, and automation question. Rung 3 moved to M2 as a CLAUDE.md test. Takeaways in `src/agentLessons/module1/takeaways.md`.
 - 2026-09-24: M1 round 2 done (rung 2). 3/3 bugs found. M1 complete. Next: M2 (CLAUDE.md), rung 3 as the CLAUDE.md test.
+- 2026-09-25: M2 started. Draft reviewed; next is writing the root CLAUDE.md. Draft 1 reviewed: named `Claude.md` so it never loaded (verified with `claude -p`); logic-placement rule still ambiguous; missing agentLessons, display-type, and state-owner facts. Draft 3 (49 lines) approved for the fresh-session rung 3 test.
 
 ## Weak spots to revisit
+- M2 draft: generic React advice instead of repo-specific facts; described folders that don't exist; lost the concrete "display is number" decision. Practice: "would a fresh agent act differently without this line?"
+- Couldn't answer the check question about how a rule can be read ambiguously. Practice spotting borderline cases in own rules.
 - Answers "a test" generically; practice naming the exact assertion and which tool runs it.
 - Rung 2 request: pseudocode conflicted with own behavior spec and state type (`.length` on a number); didn't trace it by hand. Practice tracing specs against predictions.
 - Convention drift: changed the logic-placement convention mid-request; takeaways §4 needs updating (and CLAUDE.md in M2).
