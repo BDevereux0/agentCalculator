@@ -1,1 +1,15 @@
+.calc-display {
+  border: 1px solid blue;
+}
 
+.calc-buttons {
+  border: 1px solid red;
+}
+
+.calc-buttons button {
+  border: 1px solid black;
+}
+
+.calc-buttons.invalid button {
+  background-color: green;
+}
