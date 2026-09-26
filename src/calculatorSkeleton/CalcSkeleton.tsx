@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import './CalcSkeleton.css'
 
-const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const DIGIT_ROWS = [
+  [7, 8, 9],
+  [4, 5, 6],
+  [1, 2, 3],
+  [0],
+]
 
 function CalcSkeleton() {
   const [display, setDisplay] = useState(0)
   const [invalidInput, setInvalidInput] = useState(false)
+
+  const canClear = display !== 0
 
   function changeCalcValues(digit: number): void {
     if (!Number.isInteger(digit) || digit < 0 || digit > 9) {
@@ -22,14 +29,34 @@ function CalcSkeleton() {
     }
   }
 
+  function clearDisplay(): void {
+    setDisplay(0)
+  }
+
   return (
     <div className="calc-skeleton">
       <div className="calc-display">{display}</div>
       <div className={invalidInput ? 'calc-buttons invalid' : 'calc-buttons'}>
-        {DIGITS.map((d) => (
-       	<button 
-	key={d}
-	onClick={() => changeCalcValues(d)}>{d}</button>
+        {DIGIT_ROWS.map((row, rowIndex) => (
+          <div className="calc-row" key={rowIndex}>
+            {row.map((d) => (
+              <button
+                key={d}
+                className={d === 0 ? 'calc-zero' : undefined}
+                onClick={() => changeCalcValues(d)}
+              >
+                {d}
+              </button>
+            ))}
+            {rowIndex === 0 && (
+              <button
+                className={canClear ? 'calc-clear can-clear' : 'calc-clear'}
+                onClick={()=>clearDisplay()}
+              >
+                C
+              </button>
+            )}
+          </div>
         ))}
       </div>
     </div>
