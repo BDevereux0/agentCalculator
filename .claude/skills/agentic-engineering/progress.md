@@ -1,16 +1,17 @@
 # Agentic Engineering — Progress
 
-Mode: bugs on
-Last completed rung: 2 (digit buttons)
+Mode: bugs on (user asked for harder bugs: more logic/behavior bugs that pass build+lint; count stays hidden and varies)
+Last completed rung: 3 (Clear) + 4x4 grid layout
 
 ## Modules
 | # | Module | Status | Notes |
 |---|--------|--------|-------|
 | 1 | Agentic engineering vs. vibe coding | done | Round 1 (rung 1) done: found both bugs, via build and dev. Round 2 (rung 2, digit buttons): build request took 3 review rounds (in `src/agentLessons/module1/archetectureDocRound2.md`); found all 3 bugs via dev, lint and diff; fixed; build/lint green on fix. |
-| 2 | CLAUDE.md and project memory | in progress | Draft answers in `src/agentLessons/module2/claudeMdExcercises.md`, feedback given. Needs the real `CLAUDE.md` at the root, then a fresh-session rung 3 test. |
+| 2 | CLAUDE.md and project memory | done | Fresh-session rung 3 test passed: file placement, .tsx logic, number display, CSS-only styling all followed from CLAUDE.md without restating. Gap found: rule said lint only, so a tsc bug slipped; now "build, then lint, after edits". Request in `src/agentLessons/module2/rung3.md` needed 3 clarification rounds (grid shape, 0 placement, digit order). Found both bugs. |
+| 3 | Plan mode and specs | in progress | Rung 4 spec draft 1 in `src/agentLessons/module3/planPhase.md`; review round 1 appended (10 points: undecided cases, display-0 ambiguity, C semantics change, chaining pulled from rung 9). Round 2 answered; display-0 ambiguity accepted; chaining out of scope. Plan approved **without changes** (A1–A5 accepted), so the "plan changed by feedback" criterion isn't met yet. Rung 4 built (bugged, uncommitted), unverified; user reviews next session. Resume notes at bottom of planPhase.md. |
 
 ## Bug hunt tally
-Found: 5 · Revealed: 0
+Found: 7 · Revealed: 0
 
 ## Automation backlog
 - Rung 1, misspelled CSS import → hook runs `npm run build` after edits (M7). Suggested by instructor.
@@ -18,11 +19,14 @@ Found: 5 · Revealed: 0
 - Rung 2, invalid CSS color value → CSS linter (stylelint) run by a hook (M7); otherwise human in dev. User first said "a test"; corrected (Vitest ignores CSS, jsdom drops invalid values).
 - Rung 2, missing `key` in `.map()` → hook runs `npm run lint` after edits (M7). User's answer, correct.
 - Rung 2, pressing `0` rejected by validation → Testing Library test clicking every digit, e.g. `1`,`0` shows `10` (M4). User's answer ("a test"), sharpened.
+- Rung 3, `onClick={fn()}` type error → hook runs `npm run build` after edits (M7). User's answer, correct.
+- Rung 3, inverted C colour ternary → Testing Library test on class, not colour: no `can-clear` at start, has it after clicking `5`, loses it after `C` (M4). User said "assertGreen"; sharpened (jsdom/Vitest don't apply the CSS).
 
 ## Session log
 - 2026-09-23: M1 round 1 done. Added feature ladder, strict build requests, and automation question. Rung 3 moved to M2 as a CLAUDE.md test. Takeaways in `src/agentLessons/module1/takeaways.md`.
 - 2026-09-24: M1 round 2 done (rung 2). 3/3 bugs found. M1 complete. Next: M2 (CLAUDE.md), rung 3 as the CLAUDE.md test.
-- 2026-09-25: M2 started. Draft reviewed; next is writing the root CLAUDE.md. Draft 1 reviewed: named `Claude.md` so it never loaded (verified with `claude -p`); logic-placement rule still ambiguous; missing agentLessons, display-type, and state-owner facts. Draft 3 (49 lines) approved for the fresh-session rung 3 test.
+- 2026-09-25: M2 started. Draft reviewed; next is writing the root CLAUDE.md. Draft 1 reviewed: named `Claude.md` so it never loaded (verified with `claude -p`); logic-placement rule still ambiguous; missing agentLessons, display-type, and state-owner facts. Draft 3 (49 lines) approved for the fresh-session rung 3 test. Rung 3 + grid built in fresh session; 2/2 bugs found. CLAUDE.md lint rule changed to build-then-lint. M2 done. Next: M3 (plan mode), rung 4 (addition).
+- 2026-09-28: M3 started. Check Q answered well (traced current `23` behavior; proposed operand box). Spec draft 1 reviewed: missing `2 + =`, box after `=`, ambiguous "append"; display-0 can't distinguish typed 0; pulled chaining into rung 4.
 
 ## Weak spots to revisit
 - M2 draft: generic React advice instead of repo-specific facts; described folders that don't exist; lost the concrete "display is number" decision. Practice: "would a fresh agent act differently without this line?"
@@ -31,4 +35,6 @@ Found: 5 · Revealed: 0
 - Rung 2 request: pseudocode conflicted with own behavior spec and state type (`.length` on a number); didn't trace it by hand. Practice tracing specs against predictions.
 - Convention drift: changed the logic-placement convention mid-request; takeaways §4 needs updating (and CLAUDE.md in M2).
 - Module 1 check Q: thought build/lint prove config/files only; didn't name behavior/logic bugs as what slips past green tooling. Revisit.
+- Fixed an inverted boolean at the use site (swapped ternary branches) instead of the definition, leaving `canClear` named opposite to its value. Fix booleans where they're defined.
+- Couldn't tell whether the agent ran lint (clean oxlint prints nothing); ask for command + exit code, or automate (M7).
 - Thought oxlint would catch a missing-case logic bug (leading-zero `05`); lint only flags generic patterns, not app-specific behavior.

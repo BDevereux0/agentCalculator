@@ -30,3 +30,15 @@
 .calc-clear.can-clear {
   color: green;
 }
+
+.calc-pending {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: 1.2em;
+  font-size: 0.8em;
+}
+
+.calc-buttons button.flash {
+  background-color: red;
+}

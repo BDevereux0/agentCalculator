@@ -44,6 +44,6 @@ npm run test should only be run by user authorization. npm run test:run can be d
 src/agentLessons is notes not app code.
 Display state is a number
 State lives in CalcSkeleton, which App.tsx renders
-Run lint after edits
+Run npm run build, then npm run lint, after edits
 No checks on css
 
